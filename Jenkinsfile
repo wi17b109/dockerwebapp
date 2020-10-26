@@ -1,16 +1,12 @@
-pipeline {
-    agent{
-        docker {
-             image 'node:6-alpine'
-             args '-p 3000:3000'
-        }
-    }
-    
-    stages{
-        stage("Build"){
-            steps{
-                sh 'npm install'
-            }
-        }
+node {
+
+    checkout scm
+
+    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
+
+        def customImage = docker.build("rathalexander/dockerwebapp")
+
+        /* Push the container to the custom Registry */
+        customImage.push()
     }
 }
