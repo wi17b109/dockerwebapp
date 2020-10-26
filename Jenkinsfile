@@ -1,5 +1,8 @@
 node {
 
+    stage("Build Docker Image"){
+        sh 'docker build - t alexa/dockerwebapp'
+    }
     stage("deployment"){
         
         checkout scm
