@@ -1,7 +1,15 @@
 node {
-
-    stage("Build Docker Image"){
-        sh 'docker build - t alexa/dockerwebapp'
+    agent{
+        docker {
+             image 'dockerwebapp'
+             args '-p 3000:3000'
+        }
+    }
+    
+    stage("Build"){
+        steps{
+            sh 'npm install'
+        }
     }
     stage("deployment"){
         
