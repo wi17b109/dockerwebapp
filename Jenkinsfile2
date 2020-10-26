@@ -2,12 +2,17 @@ node {
   def app
   
   stage('Clone repository'){
-  
     checkout scm
   }
   
   stage('build image'){
     app = docker.build("rathalexander/dockerwebapp")
+  }
+  
+  stage('Test image'){
+    app.inside{
+      sh 'echo "Tests passed"'
+    }
   }
   
   
