@@ -1,0 +1,21 @@
+pipeline{
+  agent{
+      docker{
+      WORKDIR '/usr/src/app'
+      COPY PACKAGE*.json ./
+      COPY . .
+      EXPOSE 8080
+      CMD ["node","servver.js"]
+      }
+  }
+  environment {
+      CI = 'true'
+  }
+  stages {
+    stage('Build'){
+        steps{
+          sh 'npm install'
+        }
+    }
+  }  
+}
