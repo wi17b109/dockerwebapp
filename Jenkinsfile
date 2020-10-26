@@ -1,4 +1,4 @@
-node {
+pipeline {
     agent{
         docker {
              image 'dockerwebapp'
@@ -6,21 +6,11 @@ node {
         }
     }
     
-    stage("Build"){
-        steps{
-            sh 'npm install'
-        }
-    }
-    stage("deployment"){
-        
-        checkout scm
-
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
-
-            def customImage = docker.build("rathalexander/dockerwebapp")
-
-            /* Push the container to the custom Registry */
-            customImage.push()
+    stages{
+        stage("Build"){
+            steps{
+                sh 'npm install'
+            }
         }
     }
 }
